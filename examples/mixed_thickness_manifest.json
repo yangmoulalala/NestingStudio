@@ -1,0 +1,32 @@
+﻿{
+  "parts": [
+    {
+      "name": "frame_3mm",
+      "quantity": 1,
+      "rotations": [0, 180],
+      "thickness_mm": 3.0,
+      "polygons": [
+        [[0, 0], [300, 0], [300, 200], [0, 200]],
+        [[60, 50], [240, 50], [240, 150], [60, 150]]
+      ]
+    },
+    {
+      "name": "small_plate_2mm",
+      "quantity": 6,
+      "rotations": [0, 90, 180, 270],
+      "thickness_mm": 2.0,
+      "polygons": [
+        [[0, 0], [80, 0], [80, 50], [0, 50]]
+      ]
+    },
+    {
+      "name": "l_bracket_2mm",
+      "quantity": 2,
+      "rotations": [0, 90, 180, 270],
+      "thickness_mm": 2.0,
+      "polygons": [
+        [[0, 0], [100, 0], [100, 30], [30, 30], [30, 80], [0, 80]]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+name: Bug report
+description: Report a reproducible defect
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Do not upload confidential CAD files. Use minimal synthetic geometry when possible.
+  - type: input
+    id: version
+    attributes:
+      label: NestingStudio version
+      placeholder: 1.0.0
+    validations:
+      required: true
+  - type: dropdown
+    id: input_type
+    attributes:
+      label: Input type
+      options:
+        - STEP/STP
+        - DXF
+        - SVG
+        - Polygon JSON
+        - Project or report JSON
+        - Not input-related
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      description: List the exact actions that trigger the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include the visible error and relevant log excerpt.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: Windows 11, packaged executable or Python 3.13
+    validations:
+      required: true

@@ -1,0 +1,25 @@
+name: Feature request
+description: Suggest an improvement
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What manufacturing or usability problem should be solved?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Geometry and process constraints
+      description: Mention thickness, clearance, grain direction, holes, face orientation, or machine constraints.
+    validations:
+      required: false

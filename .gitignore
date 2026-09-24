@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# IDE
+.idea/
+.vscode/
+
+# Generated output
+nesting_output/
+*_output/
+*.neststudio.json
+
+# CAD
+*.dxf
+*.step
+*.stp
+!examples/*.dxf
+
+# Runtime logs
+logs/
+*.log
+
+# Auto-restored session
+runtime/
+
+# OS metadata
+Thumbs.db
+desktop.ini

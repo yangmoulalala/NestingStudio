@@ -1,0 +1,5 @@
+-r requirements.txt
+cadquery==2.8.0
+PyInstaller==6.22.3
+pytest>=8,<9
+ruff>=0.11,<1
