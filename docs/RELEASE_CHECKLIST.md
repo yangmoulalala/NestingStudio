@@ -8,7 +8,7 @@
 - Run `$env:QT_QPA_PLATFORM="offscreen"; python -m unittest discover -s tests -v`.
 - Build with `scripts\build_windows.ps1`.
 - Confirm `dist\NestingStudio\NestingStudio.exe` starts normally.
-- Confirm `dist\NestingStudio-1.0.2-windows-x64.zip` exists and can be extracted.
+- Confirm `dist\NestingStudio-1.0.3-windows-x64.zip` exists and can be extracted.
 - Verify the package does not contain logs, projects, customer CAD files, local paths or credentials.
 - Review `README.md`, `CHANGELOG.md` and `THIRD_PARTY_NOTICES.md`.
 
@@ -17,7 +17,7 @@
 - Create the `yangmoulalala/NestingStudio` repository.
 - Push the `main` branch.
 - Confirm the Windows CI workflow passes.
-- Create and push the release tag `v1.0.2`.
+- Create and push the release tag `v1.0.3`.
 - Confirm the Release workflow builds and uploads the ZIP.
 - Download the release asset once and run its smoke test on a clean machine when possible.
 - Add a short release description with known limitations and upgrade notes.

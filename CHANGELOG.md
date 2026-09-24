@@ -1,5 +1,11 @@
 ﻿# Changelog
 
+## 1.0.3 - 2026-09-24
+
+### Fixed
+
+- STEP loading in the windowed Windows build when `sys.stdout` and `sys.stderr` are `None`.
+
 ## 1.0.2 - 2026-09-24
 
 ### Fixed

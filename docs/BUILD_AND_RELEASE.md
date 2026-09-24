@@ -13,7 +13,7 @@ The script performs these steps:
 1. Installs runtime and PyInstaller dependencies.
 2. Runs PyInstaller using `NestingStudio.spec`.
 3. Starts the packaged application with `--smoke-test`.
-4. Creates `dist/NestingStudio-1.0.2-windows-x64.zip` and its SHA-256 checksum.
+4. Creates `dist/NestingStudio-1.0.3-windows-x64.zip` and its SHA-256 checksum.
 
 Expected package:
 
@@ -21,8 +21,8 @@ Expected package:
 dist/
 ├─ NestingStudio/
 │  └─ NestingStudio.exe
-├─ NestingStudio-1.0.2-windows-x64.zip
-└─ NestingStudio-1.0.2-windows-x64.zip.sha256
+├─ NestingStudio-1.0.3-windows-x64.zip
+└─ NestingStudio-1.0.3-windows-x64.zip.sha256
 ```
 
 ## CI
@@ -37,8 +37,8 @@ dist/
 Create and push a version tag:
 
 ```powershell
-git tag v1.0.2
-git push origin v1.0.2
+git tag v1.0.3
+git push origin v1.0.3
 ```
 
 `.github/workflows/release.yml` then:

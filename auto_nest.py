@@ -35,10 +35,16 @@ from nesting.output import (
 )
 
 
-if not sys.stdout.isatty() and hasattr(sys.stdout, "reconfigure"):
-    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-if not sys.stderr.isatty() and hasattr(sys.stderr, "reconfigure"):
-    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+def configure_console_stream(stream: object) -> None:
+    if stream is None:
+        return
+    isatty = getattr(stream, "isatty", None)
+    if callable(isatty) and not isatty() and hasattr(stream, "reconfigure"):
+        stream.reconfigure(encoding="utf-8", errors="replace")
+
+
+configure_console_stream(sys.stdout)
+configure_console_stream(sys.stderr)
 
 
 def parse_args() -> argparse.Namespace:

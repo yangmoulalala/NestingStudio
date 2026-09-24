@@ -25,10 +25,16 @@ from typing import Any, Iterable, Sequence
 
 # When output is redirected through a pipe, use UTF-8 to avoid mojibake.
 # A real console keeps its native encoding, which is what Windows expects.
-if not sys.stdout.isatty() and hasattr(sys.stdout, "reconfigure"):
-    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-if not sys.stderr.isatty() and hasattr(sys.stderr, "reconfigure"):
-    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+def configure_console_stream(stream: Any) -> None:
+    if stream is None:
+        return
+    isatty = getattr(stream, "isatty", None)
+    if callable(isatty) and not isatty() and hasattr(stream, "reconfigure"):
+        stream.reconfigure(encoding="utf-8", errors="replace")
+
+
+configure_console_stream(sys.stdout)
+configure_console_stream(sys.stderr)
 
 try:
     from nesting.occ import (
@@ -40,11 +46,12 @@ try:
         vector_between,
     )
 except ImportError:  # pragma: no cover - friendly dependency message
-    print(
-        "OpenCascade/OCP is required. Install dependencies with:\n"
-        "  python -m pip install -r requirements.txt",
-        file=sys.stderr,
-    )
+    if sys.stderr is not None:
+        print(
+            "OpenCascade/OCP is required. Install dependencies with:\n"
+            "  python -m pip install -r requirements.txt",
+            file=sys.stderr,
+        )
     raise SystemExit(2)
 
 

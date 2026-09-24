@@ -390,7 +390,7 @@ python -m unittest discover -s .\tests -v
 ```powershell
 git init
 git add .
-git commit -m "release: NestingStudio v1.0.2"
+git commit -m "release: NestingStudio v1.0.3"
 git branch -M main
 git remote add origin https://github.com/<你的用户名>/NestingStudio.git
 git push -u origin main
@@ -408,15 +408,15 @@ scripts\build_windows.ps1
 
 ```text
 dist/NestingStudio/NestingStudio.exe
-dist/NestingStudio-1.0.2-windows-x64.zip
-dist/NestingStudio-1.0.2-windows-x64.zip.sha256
+dist/NestingStudio-1.0.3-windows-x64.zip
+dist/NestingStudio-1.0.3-windows-x64.zip.sha256
 ```
 
 ### 3. 发布 Release
 
 ```powershell
-git tag v1.0.2
-git push origin v1.0.2
+git tag v1.0.3
+git push origin v1.0.3
 ```
 
 GitHub Actions 的 `Release` workflow 会自动构建、运行打包程序冒烟测试，并上传 ZIP 到 Release。

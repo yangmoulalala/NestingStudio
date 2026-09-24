@@ -1,7 +1,7 @@
 ﻿cff-version: 1.2.0
 message: "If you use NestingStudio in academic work, please cite the repository."
 title: "NestingStudio"
-version: 1.0.2
+version: 1.0.3
 date-released: "2026-09-24"
 authors:
   - name: "NestingStudio contributors"

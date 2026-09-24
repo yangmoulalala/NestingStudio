@@ -1,6 +1,8 @@
 ﻿from __future__ import annotations
 
 import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -126,6 +128,13 @@ class AutoNestTests(unittest.TestCase):
             self.assertIn("PART_OUTER", layers)
             self.assertIn("PART_HOLE", layers)
             self.assertIn("LEAD_IN", layers)
+
+    def test_step_loader_imports_without_console(self) -> None:
+        code = (
+            "import sys; sys.stdout = None; sys.stderr = None; "
+            "import step_thickness_classifier, nesting.step_input"
+        )
+        subprocess.run([sys.executable, "-c", code], check=True)
 
     def test_diagnostic_report_path_expands_embedded_env(self) -> None:
         raw = (
