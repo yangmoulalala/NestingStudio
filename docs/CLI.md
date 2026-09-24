@@ -68,7 +68,7 @@ python auto_nest.py "D:\DXF零件" `
   -H 1220
 ```
 
-也可以将文件或文件夹拖到 `run_auto_nest.bat` 上。
+也可以将文件或文件夹拖到 `python auto_nest.py` 上。
 
 ### 使用 JSON 清单控制厚度、数量与纹理方向
 

@@ -329,7 +329,7 @@ DXF/SVG 必须指定厚度：
 python auto_nest.py "D:\DXF零件" --thickness 3.0 -W 2440 -H 1220
 ```
 
-详细 CLI 文档见 `README_NESTING.md`。
+详细 CLI 文档见 `docs/CLI.md`。
 
 ## 测试
 
