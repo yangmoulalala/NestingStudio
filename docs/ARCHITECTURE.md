@@ -12,6 +12,7 @@ nesting_studio/
   part_table.py        Searchable/editable part list
   canvas.py            Interactive DXF-like nesting canvas
   workers.py           Background loading and optimization threads
+  diagnostics.py       Command-line parsing diagnostics and JSON reports
   project_io.py        Project and global-summary import
   logging_config.py    Rotating logs
 

@@ -1,5 +1,11 @@
 ﻿# Changelog
 
+## 1.0.1 - 2026-09-24
+
+### Added
+
+- Detailed parsing errors, per-file traceback logging and a release diagnostic report command.
+
 ## 1.0.0 - 2026-09-24
 
 ### Added

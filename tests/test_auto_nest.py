@@ -1,5 +1,6 @@
 ﻿from __future__ import annotations
 
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -16,6 +17,7 @@ from nesting.inputs import (
 from nesting.models import NestingConfig
 from nesting.optimize import OptimizerSettings, initial_schedules, solve_nesting
 from nesting.output import export_sheet_dxf, validate_solution
+from nesting_studio.diagnostics import run_diagnostics
 
 
 class AutoNestTests(unittest.TestCase):
@@ -124,6 +126,25 @@ class AutoNestTests(unittest.TestCase):
             self.assertIn("PART_OUTER", layers)
             self.assertIn("PART_HOLE", layers)
             self.assertIn("LEAD_IN", layers)
+
+    def test_diagnostic_report_for_polygon_input(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "part.json"
+            path.write_text(
+                json.dumps(
+                    {
+                        "name": "diag_part",
+                        "quantity": 1,
+                        "thickness_mm": 3.0,
+                        "polygons": [[[0, 0], [20, 0], [20, 10], [0, 10]]],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            report = run_diagnostics([path], 0.25)
+            self.assertEqual(report["part_count"], 1)
+            self.assertEqual(report["failed"], 0)
+            self.assertEqual(report["parts"][0]["status"], "ok")
 
     def test_dxf_contour_with_hole(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

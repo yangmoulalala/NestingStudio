@@ -15,6 +15,11 @@ from .version import __version__
 
 
 def main() -> int:
+    if "--diagnose" in sys.argv[1:]:
+        from .diagnostics import diagnostic_main
+
+        return diagnostic_main(sys.argv[1:])
+
     configure_logging()
     QCoreApplication.setOrganizationName("NestingStudio")
     QCoreApplication.setApplicationName("NestingStudio")

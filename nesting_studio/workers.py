@@ -62,6 +62,13 @@ class LoadPartsWorker(QThread):
                     entry.definition = definition
                 except Exception as exc:
                     entry.error = f"{type(exc).__name__}: {exc}"
+                    logger.error(
+                        "Failed to load part: name=%s source=%s error=%s",
+                        request.name,
+                        request.path or "polygon-list",
+                        entry.error,
+                        exc_info=True,
+                    )
                 entries.append(entry)
                 self.progress.emit(index, total, entry.display_name)
             self.finished_successfully.emit(entries)

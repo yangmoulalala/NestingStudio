@@ -240,6 +240,7 @@ class PartTablePanel(QWidget):
             status_item.setFlags(status_item.flags() & ~Qt.ItemFlag.ItemIsEditable)
             if entry.error:
                 status_item.setForeground(QColor("#ff8a80"))
+                status_item.setToolTip(entry.error)
             self.table.setItem(row, 7, status_item)
 
         self.table.resizeRowsToContents()

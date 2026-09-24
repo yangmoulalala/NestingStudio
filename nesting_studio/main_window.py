@@ -579,7 +579,7 @@ class MainWindow(QMainWindow):
         self.action_add_files.setEnabled(not running)
         self.action_add_folder.setEnabled(not running)
         self.action_manifest.setEnabled(not running)
-        self.config_panel.set_running(running)
+        self.config_panel.set_running(running or self._load_worker is not None)
 
     def _set_measurement_enabled(self, enabled: bool) -> None:
         self.canvas.set_measure_mode(enabled)
@@ -1208,11 +1208,25 @@ class MainWindow(QMainWindow):
             self.part_panel.apply_default_thickness(self.config_panel.default_thickness())
         failed = [entry for entry in self.part_panel.entries if entry.definition is None or entry.error]
         if failed:
-            QMessageBox.warning(
-                self,
-                "存在无效零件",
-                "以下零件仍未成功解析：\n" + "\n".join(entry.display_name for entry in failed),
+            details = []
+            for entry in failed:
+                reason = entry.error or "geometry was not created"
+                details.append(
+                    f"{entry.display_name}\n"
+                    f"  source: {entry.source_text}\n"
+                    f"  error: {reason}"
+                )
+            box = QMessageBox(self)
+            box.setIcon(QMessageBox.Icon.Warning)
+            box.setWindowTitle("\u5b58\u5728\u65e0\u6548\u96f6\u4ef6")
+            box.setText(
+                f"\u4ee5\u4e0b {len(failed)} \u4e2a\u96f6\u4ef6\u4ecd\u672a\u6210\u529f\u89e3\u6790\u3002"
             )
+            box.setInformativeText(
+                "\u8be6\u7ec6\u9519\u8bef\u53ef\u5728\u5c55\u5f00\u5185\u5bb9\u4e2d\u67e5\u770b\u6216\u590d\u5236\u3002"
+            )
+            box.setDetailedText("\n\n".join(details))
+            box.exec()
             return None
         missing = [
             entry
