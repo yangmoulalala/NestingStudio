@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
+import re
 import sys
 import time
 import traceback
@@ -13,6 +15,31 @@ from nesting.inputs import PartRequest, load_requests
 from .logging_config import configure_logging
 from .project_io import import_global_summary, is_global_summary
 from .version import __version__
+
+
+def resolve_report_path(value: str) -> Path:
+    raw = value.strip().strip('\"').strip("'")
+    raw = re.sub(
+        r"\$env:([A-Za-z_][A-Za-z0-9_]*)",
+        lambda match: os.environ.get(match.group(1), match.group(0)),
+        raw,
+        flags=re.IGNORECASE,
+    )
+    raw = os.path.expandvars(raw)
+
+    # Recover an embedded absolute path when a shell left an env expression literal.
+    drive_matches = list(re.finditer(r"[A-Za-z]:[\\/]", raw))
+    if drive_matches and drive_matches[-1].start() > 0:
+        raw = raw[drive_matches[-1].start() :]
+
+    path = Path(raw).expanduser()
+    if not path.is_absolute():
+        path = Path.cwd() / path
+    if path.exists() and path.is_dir():
+        return (path / "nesting_diagnostic.json").resolve()
+    if path.suffix.lower() != ".json":
+        path = path / "nesting_diagnostic.json"
+    return path.resolve(strict=False)
 
 
 def _requests_for_input(path: Path) -> list[PartRequest]:
@@ -86,12 +113,16 @@ def diagnostic_main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--diagnose", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("inputs", nargs="+", type=Path)
-    parser.add_argument("--report", required=True, type=Path)
+    parser.add_argument(
+        "--report",
+        default="nesting_diagnostic.json",
+        help="Report JSON path; defaults to .\\nesting_diagnostic.json",
+    )
     parser.add_argument("--tolerance", type=float, default=0.5)
     args = parser.parse_args(argv)
 
     configure_logging()
-    report_path = args.report.expanduser().resolve()
+    report_path = resolve_report_path(args.report)
     try:
         report = run_diagnostics(args.inputs, args.tolerance)
     except Exception:
@@ -102,7 +133,11 @@ def diagnostic_main(argv: list[str] | None = None) -> int:
             "traceback": traceback.format_exc(),
             "parts": [],
         }
-    report_path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        report_path.parent.mkdir(parents=True, exist_ok=True)
+    except OSError:
+        report_path = (Path.cwd() / "nesting_diagnostic.json").resolve()
+        report_path.parent.mkdir(parents=True, exist_ok=True)
     report_path.write_text(
         json.dumps(report, ensure_ascii=False, indent=2),
         encoding="utf-8",

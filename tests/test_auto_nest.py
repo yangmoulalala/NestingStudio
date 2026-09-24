@@ -17,7 +17,7 @@ from nesting.inputs import (
 from nesting.models import NestingConfig
 from nesting.optimize import OptimizerSettings, initial_schedules, solve_nesting
 from nesting.output import export_sheet_dxf, validate_solution
-from nesting_studio.diagnostics import run_diagnostics
+from nesting_studio.diagnostics import resolve_report_path, run_diagnostics
 
 
 class AutoNestTests(unittest.TestCase):
@@ -126,6 +126,16 @@ class AutoNestTests(unittest.TestCase):
             self.assertIn("PART_OUTER", layers)
             self.assertIn("PART_HOLE", layers)
             self.assertIn("LEAD_IN", layers)
+
+    def test_diagnostic_report_path_expands_embedded_env(self) -> None:
+        raw = (
+            "D:\\Download\\NestingStudio-1.0.1-windows-x64\\"
+            "$env:USERPROFILE\\Desktop"
+        )
+        report_path = resolve_report_path(raw)
+        self.assertTrue(report_path.is_absolute())
+        self.assertEqual(report_path.name, "nesting_diagnostic.json")
+        self.assertNotIn("$env:", str(report_path))
 
     def test_diagnostic_report_for_polygon_input(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

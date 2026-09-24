@@ -1,5 +1,11 @@
 ﻿# Changelog
 
+## 1.0.2 - 2026-09-24
+
+### Fixed
+
+- Diagnostic report paths now tolerate unexpanded `$env:NAME` and `%NAME%` expressions and default to the current directory.
+
 ## 1.0.1 - 2026-09-24
 
 ### Added

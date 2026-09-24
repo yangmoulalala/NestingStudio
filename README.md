@@ -289,7 +289,7 @@ python -m nesting_studio
 发布版可在命令行执行：
 
 ```powershell
-.\NestingStudio.exe --diagnose --report "$env:USERPROFILE\Desktop\nesting_diagnostic.json" "D:\零件目录"
+.\NestingStudio.exe --diagnose --report .\nesting_diagnostic.json "D:\零件目录"
 ```
 
 诊断报告包含每个文件的状态、厚度、面积、孔数，以及失败时的完整异常堆栈。
@@ -390,7 +390,7 @@ python -m unittest discover -s .\tests -v
 ```powershell
 git init
 git add .
-git commit -m "release: NestingStudio v1.0.1"
+git commit -m "release: NestingStudio v1.0.2"
 git branch -M main
 git remote add origin https://github.com/<你的用户名>/NestingStudio.git
 git push -u origin main
@@ -408,15 +408,15 @@ scripts\build_windows.ps1
 
 ```text
 dist/NestingStudio/NestingStudio.exe
-dist/NestingStudio-1.0.1-windows-x64.zip
-dist/NestingStudio-1.0.1-windows-x64.zip.sha256
+dist/NestingStudio-1.0.2-windows-x64.zip
+dist/NestingStudio-1.0.2-windows-x64.zip.sha256
 ```
 
 ### 3. 发布 Release
 
 ```powershell
-git tag v1.0.1
-git push origin v1.0.1
+git tag v1.0.2
+git push origin v1.0.2
 ```
 
 GitHub Actions 的 `Release` workflow 会自动构建、运行打包程序冒烟测试，并上传 ZIP 到 Release。
